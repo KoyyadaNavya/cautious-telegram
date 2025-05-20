@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Advanced Web Project</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f2f2f2;
+      color: #333;
+    }
+
+    header {
+      background: #007acc;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+    }
+
+    h2 {
+      color: #007acc;
+    }
+
+    /* Image Carousel */
+    .carousel {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .carousel img {
+      width: 100%;
+      max-width: 500px;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .carousel button {
+      margin: 10px;
+      padding: 10px 20px;
+      background: #007acc;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    /* Joke API */
+    .joke-box {
+      margin-top: 30px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background-color: #f9f9f9;
+    }
+
+    .joke-box button {
+      margin-top: 10px;
+      padding: 10px 15px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .carousel img {
+        width: 90%;
+      }
+
+      .carousel button {
+        padding: 8px 16px;
+      }
+
+      .joke-box {
+        font-size: 0.95rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        font-size: 1.2rem;
+      }
+
+      .carousel button,
+      .joke-box button {
+        width: 100%;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Advanced Styling & JavaScript Project</h1>
+  </header>
+
+  <div class="container">
+
+    <!-- IMAGE CAROUSEL -->
+    <div class="carousel">
+      <h2>Image Carousel</h2>
+      <img id="carouselImage" src="https://picsum.photos/id/1015/600/400" alt="Image Carousel" />
+      <br />
+      <button onclick="prevImage()">Previous</button>
+      <button onclick="nextImage()">Next</button>
+    </div>
+
+    <!-- JOKE API FETCH -->
+    <div class="joke-box">
+      <h2>Get a Random Joke</h2>
+      <p id="joke">Click the button to fetch a joke.</p>
+      <button onclick="getJoke()">Get Joke</button>
+    </div>
+
+  </div>
+
+  <script>
+    // Image Carousel
+    const images = [
+      "https://picsum.photos/id/1015/600/400",
+      "https://picsum.photos/id/1025/600/400",
+      "https://picsum.photos/id/1041/600/400",
+      "https://picsum.photos/id/1035/600/400"
+    ];
+    let currentImage = 0;
+
+    function showImage(index) {
+      document.getElementById("carouselImage").src = images[index];
+    }
+
+    function nextImage() {
+      currentImage = (currentImage + 1) % images.length;
+      showImage(currentImage);
+    }
+
+    function prevImage() {
+      currentImage = (currentImage - 1 + images.length) % images.length;
+      showImage(currentImage);
+    }
+
+    // Joke API Fetch
+    function getJoke() {
+      fetch('https://official-joke-api.appspot.com/random_joke')
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('joke').innerText = `${data.setup} — ${data.punchline}`;
+        })
+        .catch(error => {
+          document.getElementById('joke').innerText = "Failed to fetch joke. Try again.";
+        });
+    }
+  </script>
+</body>
+</html>
